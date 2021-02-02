@@ -73,13 +73,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             db.select(table,cols[0])
                         elif cond != "" and cols[0]=="*":
                             db.select(table,cols[0],cond)
-                        elif cond == "" and cols[0]!="*" and len(cols)==1:
+                        elif cond == "" and cols[0]!="*":
                             db.select(table,cols)
-                        elif cond != "" and cols[0]!="*" and len(cols)==1:
-                            db.select(table,cols)
-                        elif cond == "" and len(cols)>1:
-                            db.select(table,cols)
-                        elif cond != "" and len(cols)>1:
+                        elif cond != "" and cols[0]!="*":
                             db.select(table,cols,cond)
                         result_string = result.getvalue()
                         conn.sendall(result_string.encode())
