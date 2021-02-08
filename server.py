@@ -7,10 +7,10 @@ import sys
 HOST = '127.0.0.1'
 PORT = 65432  
 
-def getTable(inp):
+def getTable(inp):#This function finds the table in the sql query
     t = inp[inp.index("from")+1]
     return t
-def getCols(inp):
+def getCols(inp):#This function finds the columns in the sql query
     st = inp.index("select")
     end = inp.index("from")
     cols = list()
@@ -26,7 +26,7 @@ def getCols(inp):
             if inp[st+i].strip()!=",":
                 cols.append(inp[st+i].strip().replace(",",""))
     return cols
-def getCond(inp):
+def getCond(inp):#This function finds the condition in the sql query if one exists
     if "where" in inp:
         w = inp.index("where")
         if len(inp) - w == 1:
@@ -64,20 +64,20 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         table = getTable(data)
                         cols = getCols(data)
                         cond = getCond(data).replace(" ","")
-                        db = Database("smdb")
+                        db = Database("smdb")#The database the server functions on can be changed here
                         result = StringIO()
                         sys.stdout = result
-                        if db.is_locked(table):
+                        if db.is_locked(table):#Unlock table if it is locked
                             db.unlock_table(table)
-                        if cond == "" and cols[0]=="*":
+                        if cond == "" and cols[0]=="*":#Retrive every column from the given table with no condition
                             db.select(table,cols[0])
-                        elif cond != "" and cols[0]=="*":
+                        elif cond != "" and cols[0]=="*":#Retrive every column from the given table with the given condition
                             db.select(table,cols[0],cond)
-                        elif cond == "" and cols[0]!="*":
+                        elif cond == "" and cols[0]!="*":#Retrive specific cols from the given table with no condition
                             db.select(table,cols)
-                        elif cond != "" and cols[0]!="*":
+                        elif cond != "" and cols[0]!="*":#Retrive specific cols from the given table with the given condition
                             db.select(table,cols,cond)
                         result_string = result.getvalue()
                         conn.sendall(result_string.encode())
                     except Exception as e:
-                        conn.sendall(str(e).encode())
+                        conn.sendall(str(e).encode())#Send the exception information to the user
