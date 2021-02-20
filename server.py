@@ -79,5 +79,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             db.select(table,cols,cond)
                         result_string = result.getvalue()
                         conn.sendall(result_string.encode())
-                    except Exception as e:
-                        conn.sendall(str(e).encode())#Send the exception information to the user
+                    except KeyError:#Catch table error
+                        conn.sendall("Table does not exist.".encode())
+                    except ValueError as e:#Catch column or condition error
+                        if "is not in list" in str(e):
+                            conn.sendall("Column does not exist.".encode())
+                        elif "Condition is not valid" in str(e):
+                            conn.sendall("Condition arguement is not correct".encode())
+                    except Exception as e:#Catch any other type of error
+                        conn.sendall(str(e).encode())
