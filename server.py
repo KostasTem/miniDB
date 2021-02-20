@@ -65,10 +65,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         cols = getCols(data)
                         cond = getCond(data).replace(" ","")
                         db = Database("smdb")#The database the server functions on can be changed here
-                        result = StringIO()
-                        sys.stdout = result
                         if db.is_locked(table):#Unlock table if it is locked
                             db.unlock_table(table)
+                        result = StringIO()
+                        sys.stdout = result
                         if cond == "" and cols[0]=="*":#Retrive every column from the given table with no condition
                             db.select(table,cols[0])
                         elif cond != "" and cols[0]=="*":#Retrive every column from the given table with the given condition
