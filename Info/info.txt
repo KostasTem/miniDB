@@ -9,4 +9,5 @@ Select column1,column2 from table where condition
 Ο server έχει την δυνατότητα να βρίσκει το table, τα columns και το condition μέσω των συναρτήσεων getTable, getCols και getCond αντίστοιχα οι 
 οποίες παίρνουν το query και το επεξεργάζονται ώστε να πάρουν την πληροφορία που χρειάζονται. Αφού εξάγει αυτήν την πληροφορία καλεί την select 
 από το αρχείο Database η οποία επιστρέφει τις κατάλληλες πληροφορίες. Ο server λειτουργεί πάνω στην βάση smdb που δημιουργείτε από το αρχείο 
-smallRelationsInsertFile.py και μπορεί εύκολα να αλλάξει, αλλάζοντας την τιμή στην αρχικοποίηση του Database στο αρχείο server.py
+smallRelationsInsertFile.py και μπορεί εύκολα να αλλάξει, αλλάζοντας την τιμή στην αρχικοποίηση του Database στο αρχείο server.py. Ο server τρέχει
+στο local host.
